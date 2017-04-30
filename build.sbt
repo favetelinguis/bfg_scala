@@ -2,7 +2,7 @@ import Dependencies._
 
 
 lazy val commonSettings = Seq(
-  organization := "hlab.bfg",
+  organization := "com.bfg",
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.12.2"
 )

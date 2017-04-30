@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScappleDocument Version="1.1" ID="5E64A4F0-E143-4754-BE0C-88D2D81B04B8">
+    <Notes>
+        <Note ID="0" FontSize="12.0" Position="490.789062,438.816406" Width="204.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>W1
+CH4, 13, 14 IDM
+Ch1 FRDM
+Read BF Stream spec see Java ex</String>
+        </Note>
+        <Note ID="2" FontSize="12.0" Position="409.0,190.0" Width="293.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Infrastructure layer
+Ports are ex HTTP TCP JDBC etc
+Adapters are ex rest handler
+Repository implementations are persistance Adapters
+Adapters aka (anti corruption layer)</String>
+            <ConnectedNoteIDs>5</ConnectedNoteIDs>
+        </Note>
+        <Note ID="3" FontSize="12.0" Position="254.21875,437.054688" Width="184.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Pipes and Filters
+Long running processes = Sagas</String>
+        </Note>
+        <Note ID="4" FontSize="12.0" Position="33.417969,150.992188" Width="302.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Application layer uses eg DI!
+In application layer we handle for ex security
+The client of the domain model
+Application services are the primary means of expressing use cases. 
+A common case is for example tasks like commitBacklogItemToSprint and get an aggregate or domain service, make changes and store it in a repository.
+Applications services uses factories/constructors and repositories. They should be short and lightweight, all domain logic go in domain model. OBS If the domain model emits Domain Events. The application layer my register subscribers and act on them as one of the applications duties.</String>
+            <ConnectedNoteIDs>5</ConnectedNoteIDs>
+        </Note>
+        <Note ID="5" FontSize="12.0" Position="279.550781,12.476562" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Hexagonal is the verstile foundation, it supports CQRS EventDriven, REST or any other style</String>
+            <ConnectedNoteIDs>2, 4</ConnectedNoteIDs>
+        </Note>
+        <Note ID="6" FontSize="12.0" Position="886.0,217.663925" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Domain events In Scala without actors? How to subscribe?
+
+Modules chapter5 deal with  seperating one larg domain model into its bounded contexts! “With a modular system each component is self-contained in functionality and interacts with the other components only throgh explicitly defined contracts”
+
+How do i seperate bounded context in Scala?
+I vilket lager kommunicerar man mellan bounded contexts???? </String>
+        </Note>
+        <Note ID="7" FontSize="12.0" Position="650.440241,532.713268" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>ADT (Sum/Product types) and Services (Objects) in Scala are the base abstractions for DDD.
+We define an algebraic API (Trait) above these Abstractions.</String>
+            <ConnectedNoteIDs>15</ConnectedNoteIDs>
+        </Note>
+        <Note ID="8" FontSize="12.0" Position="857.0,159.0" Width="119.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Tradesystem context
+Market
+ORDER Event</String>
+        </Note>
+        <Note ID="9" FontSize="12.0" Position="1011.468476,156.755757" Width="108.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Policy optimization</String>
+        </Note>
+        <Note ID="10" FontSize="12.0" Position="837.0,80.0" Width="95.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Data processing
+Market</String>
+        </Note>
+        <Note ID="11" FontSize="12.0" Position="1013.0,83.0" Width="88.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Order handling
+Market
+Order</String>
+        </Note>
+        <Note ID="12" FontSize="12.0" Position="723.277686,116.56716" Width="105.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Risk management</String>
+        </Note>
+        <Note ID="13" FontSize="12.0" Position="287.933936,701.881031" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Domain Layer
+Implement domain logic as pure functions that does updates on one or more aggregates and does not use any subsystems.
+All behavior go into Services as traits even behavior on a single ADT. All updates on the Aggregate uses Lenses.
+Factory go into the companion object.
+Repository is a trait.</String>
+            <ConnectedNoteIDs>15</ConnectedNoteIDs>
+        </Note>
+        <Note ID="14" FontSize="12.0" Position="590.673794,718.260417" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Application Layer (Services)
+This is where use cases are implemented.
+Use DI to inject the needed extenal dependecies. Use abstractions as futures etc to compose sideeffects and implement the use case using combinators such as map, flatMap etc.</String>
+            <ConnectedNoteIDs>15</ConnectedNoteIDs>
+        </Note>
+        <Note ID="15" FontSize="12.0" Position="488.0,630.0" Width="123.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Scala functional DDD</String>
+            <ConnectedNoteIDs>7, 13-14</ConnectedNoteIDs>
+        </Note>
+        <Note ID="16" FontSize="12.0" Position="1112.358279,546.316338" Width="329.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Modules
+com.bfg6.boundedcontext.domain.model
+com.bfg6.boundedcontext.domain.model.aggregatesoot
+com.bfg6.boundedcontext.domain.service
+com.bfg6.boundedcontext.application
+com.bfg6.boundedcontext.infrastucture
+
+The domain part my be devoid of content, only hold subfolders.
+Under model reusable interfaces and abstract classes, used in common for other submodules, for example EventPublisher interface</String>
+        </Note>
+    </Notes>
+    <BackgroundShapes></BackgroundShapes>
+    <AutoFit>2-3, 8-12, 15</AutoFit>
+    <NoteStyles>
+        <Style Name="Title Text" ID="B06DAA96-1858-4AE5-82F3-864822EE7B83" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
+            <FontSize>28.0</FontSize>
+            <IsBold>Yes</IsBold>
+        </Style>
+        <Style Name="Red Text" ID="E47F2CA5-8DCA-431A-ADB5-4FEBC44A9F66" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
+            <TextColor>1.0 0.0 0.0</TextColor>
+        </Style>
+        <Style Name="Brown Bubble" ID="F1EF24AD-AB96-478E-8EAB-ADFB59E74FA7" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.290055 0.1523 0.182215</BorderColor>
+            <FillColor>0.940019 0.892907 0.779716</FillColor>
+        </Style>
+        <Style Name="Yellow Bubble" ID="A9CD28AA-7149-4FAC-A34E-ABB5BF04EA5D" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.756763 0.785592 0.373258</BorderColor>
+            <FillColor>0.906773 0.910625 0.634363</FillColor>
+        </Style>
+        <Style Name="Green Bubble" ID="366E474F-8D52-4FAB-97D3-FE13BAD21DC5" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.331867 0.609932 0.356197</BorderColor>
+            <FillColor>0.790123 0.882328 0.80198</FillColor>
+        </Style>
+        <Style Name="Blue Bubble" ID="F3711B77-A9A6-4C73-8056-0DC8EDF64F7F" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.477193 0.557066 0.76433</BorderColor>
+            <FillColor>0.840969 0.866828 0.925903</FillColor>
+        </Style>
+        <Style Name="Pink Bubble" ID="D440A233-305A-4D63-AD39-C6163AFE6918" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.747881 0.366532 0.542813</BorderColor>
+            <FillColor>0.918452 0.807302 0.863467</FillColor>
+        </Style>
+    </NoteStyles>
+    <UISettings>
+        <BackgroundColor>0.999737 0.986332 0.931298</BackgroundColor>
+        <DefaultFont>Helvetica</DefaultFont>
+        <DefaultTextColor>0.0 0.0 0.0</DefaultTextColor>
+    </UISettings>
+    <PrintSettings PaperSize="595.0,842.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
+</ScappleDocument>
