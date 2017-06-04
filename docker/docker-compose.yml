@@ -1,0 +1,10 @@
+bfg:
+  image: bfg:latest<localBuild>
+  environment:
+    JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+  ports:
+    - "0:8080"
+    - "0:5005"
+  env_file:
+    - ~/bfgsecret.env
+    - ./bfgdocker.env

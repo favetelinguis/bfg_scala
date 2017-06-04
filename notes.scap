@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ScappleDocument Version="1.1" ID="5E64A4F0-E143-4754-BE0C-88D2D81B04B8">
     <Notes>
-        <Note ID="0" FontSize="12.0" Position="490.789062,438.816406" Width="204.0">
+        <Note ID="0" FontSize="12.0" Position="525.0,302.0" Width="309.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
-            <String>W1
-CH4, 13, 14 IDM
-Ch1 FRDM
-Read BF Stream spec see Java ex</String>
+            <String>Ch2,3,5 How to structure with Traits?
+Repository with Akka stream?
+Akka persitance for Aggregate roots, is factory the creator of the persistance actor then? If i use event source i dont have repository?
+BF Stream docs
+TDD with Akka Strams, how to mock sources and sinks?</String>
+            <ConnectedNoteIDs>6</ConnectedNoteIDs>
         </Note>
         <Note ID="2" FontSize="12.0" Position="409.0,190.0" Width="293.0">
             <Appearance>
@@ -21,33 +23,34 @@ Repository implementations are persistance Adapters
 Adapters aka (anti corruption layer)</String>
             <ConnectedNoteIDs>5</ConnectedNoteIDs>
         </Note>
-        <Note ID="3" FontSize="12.0" Position="254.21875,437.054688" Width="184.0">
+        <Note ID="3" FontSize="12.0" Position="254.0,437.0" Width="184.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
             <String>Pipes and Filters
 Long running processes = Sagas</String>
         </Note>
-        <Note ID="4" FontSize="12.0" Position="33.417969,150.992188" Width="302.0">
+        <Note ID="4" FontSize="12.0" Position="33.0,151.0" Width="302.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
             <String>Application layer uses eg DI!
-In application layer we handle for ex security
+In application layer we handle security, transactions
 The client of the domain model
 Application services are the primary means of expressing use cases. 
+Keep application services thin, using them only to COORDINATE tasks on the model.
 A common case is for example tasks like commitBacklogItemToSprint and get an aggregate or domain service, make changes and store it in a repository.
 Applications services uses factories/constructors and repositories. They should be short and lightweight, all domain logic go in domain model. OBS If the domain model emits Domain Events. The application layer my register subscribers and act on them as one of the applications duties.</String>
             <ConnectedNoteIDs>5</ConnectedNoteIDs>
         </Note>
-        <Note ID="5" FontSize="12.0" Position="279.550781,12.476562" Width="200.0">
+        <Note ID="5" FontSize="12.0" Position="280.0,12.0" Width="200.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
             <String>Hexagonal is the verstile foundation, it supports CQRS EventDriven, REST or any other style</String>
             <ConnectedNoteIDs>2, 4</ConnectedNoteIDs>
         </Note>
-        <Note ID="6" FontSize="12.0" Position="886.0,217.663925" Width="200.0">
+        <Note ID="6" FontSize="12.0" Position="899.0,218.0" Width="200.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -56,9 +59,12 @@ Applications services uses factories/constructors and repositories. They should 
 Modules chapter5 deal with  seperating one larg domain model into its bounded contexts! “With a modular system each component is self-contained in functionality and interacts with the other components only throgh explicitly defined contracts”
 
 How do i seperate bounded context in Scala?
-I vilket lager kommunicerar man mellan bounded contexts???? </String>
+I vilket lager kommunicerar man mellan bounded contexts???? 
+
+Exception handling? How do i design a separate module for handling failure in practice? Do i handle it in application service?</String>
+            <ConnectedNoteIDs>0</ConnectedNoteIDs>
         </Note>
-        <Note ID="7" FontSize="12.0" Position="650.440241,532.713268" Width="200.0">
+        <Note ID="7" FontSize="12.0" Position="650.0,533.0" Width="200.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -74,7 +80,7 @@ We define an algebraic API (Trait) above these Abstractions.</String>
 Market
 ORDER Event</String>
         </Note>
-        <Note ID="9" FontSize="12.0" Position="1011.468476,156.755757" Width="108.0">
+        <Note ID="9" FontSize="12.0" Position="1011.0,157.0" Width="108.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -95,13 +101,13 @@ Market</String>
 Market
 Order</String>
         </Note>
-        <Note ID="12" FontSize="12.0" Position="723.277686,116.56716" Width="105.0">
+        <Note ID="12" FontSize="12.0" Position="723.0,117.0" Width="105.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
             <String>Risk management</String>
         </Note>
-        <Note ID="13" FontSize="12.0" Position="287.933936,701.881031" Width="200.0">
+        <Note ID="13" FontSize="12.0" Position="288.0,702.0" Width="200.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -112,7 +118,7 @@ Factory go into the companion object.
 Repository is a trait.</String>
             <ConnectedNoteIDs>15</ConnectedNoteIDs>
         </Note>
-        <Note ID="14" FontSize="12.0" Position="590.673794,718.260417" Width="200.0">
+        <Note ID="14" FontSize="12.0" Position="591.0,718.0" Width="200.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -128,7 +134,7 @@ Use DI to inject the needed extenal dependecies. Use abstractions as futures etc
             <String>Scala functional DDD</String>
             <ConnectedNoteIDs>7, 13-14</ConnectedNoteIDs>
         </Note>
-        <Note ID="16" FontSize="12.0" Position="1112.358279,546.316338" Width="329.0">
+        <Note ID="16" FontSize="12.0" Position="83.0,1572.0" Width="329.0">
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
@@ -141,42 +147,204 @@ com.bfg6.boundedcontext.infrastucture
 
 The domain part my be devoid of content, only hold subfolders.
 Under model reusable interfaces and abstract classes, used in common for other submodules, for example EventPublisher interface</String>
+            <ConnectedNoteIDs>17, 23</ConnectedNoteIDs>
+        </Note>
+        <Note ID="17" FontSize="12.0" Position="124.0,1826.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Traits and Objects are modues
+Traits are small using of functionality
+Compose small traits into larger
+Make a concrete object from as last step from One large trait
+
+Parameterized module contract and Concrete modules
+I can make traits more generic by parematarize some types and values, this modells the variability in be behavior. It is not untill i make an object out of the trait that i have to commit to a specific implementation.
+
+trait name[A,B] A and B are also parameterized traits, what is the difference? I can use them before thy are implemented.
+
+The algebra of the api is a trait without implementations, there can be many interpreters of the algebra and in Scala the interpreter is implemented using Objects.
+If there is only one implementation of the algebra use Trait to implement and then just nstantiate the trait using an object</String>
+            <ConnectedNoteIDs>16</ConnectedNoteIDs>
+        </Note>
+        <Note ID="18" FontSize="12.0" Position="1304.0,142.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Aggregates
+The most important property of an aggregate is that it defines the consistency boundary of the abstraction. Whatever operation you do on an aggregate it never becomes inconsistent from the model point of view.
+They laws of my algebra must ensure this.
+I verify this by using the type system and property based testing.</String>
+        </Note>
+        <Note ID="19" FontSize="12.0" Position="142.0,1027.0" Width="261.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Workflow
+1: Create the domain behaviors (Domain services) using traits. Paremeterize the Types not implemented, and the variability in the behaviors. Put attention on Types so they line up! This is where I need to understand monad transformers since API will have multiple effects staced in there return types.
+
+2: Define the invariants of the algebra using types and property based testing. Phantom types are used to enforce state machine behavior statically. If my algebra requires effects to happend in specific order on one type (all functions return the same type) i can enforce that with phantom types. Must be a good use with monad pattern?
+
+3: Implement Entityes and value objects as ADTs (case object and case class)
+
+4: Setup aggregate roots as persistent Actors
+
+5: Crete the interpreters of the algebra (object)</String>
+            <ConnectedNoteIDs>20-23</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Bold="Yes">0,8</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="20" FontSize="12.0" Position="534.0,931.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Creation
+Domain objects need to be minimally valid on creation. Creation need to contain validation according to busniess rules.
+Validations need to be pluggable to objects and reusable under various constraints. Have specific failure semantics and a domain-friendly syntax.
+
+Use validator in cats, applicative style when validating?</String>
+            <ConnectedNoteIDs>19</ConnectedNoteIDs>
+        </Note>
+        <Note ID="21" FontSize="12.0" Position="568.0,1118.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Aggregates
+An aggregate provides a single point of reference to an entity for the outside world. As a client of the API (Application layer) you dont want to bother with the details of other enteties, only the aggregate.
+
+The aggregate root exposes the api for handling all included parts of the aggregate, for updating all parts of the aggregate. This can be done succinctly by using lens composition. Expose top-level lenses that allow transformation of lower-level objects only through the root element.
+
+Using state monad (ch 4) to handle updates?
+
+Dont use pattern matching on aggregates, that will leak implementation details. Use extractor pattern instead</String>
+            <ConnectedNoteIDs>19</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Bold="Yes">384,4</FormatRange>
+                <FormatRange Bold="Yes">513,11</FormatRange>
+                <FormatRange Bold="Yes">636,25</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="22" FontSize="12.0" Position="324.0,1324.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Repository
+
+Reader monad use for DI, need to understand monad transformers and the Reader monad from Scalaz</String>
+            <ConnectedNoteIDs>19</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Bold="Yes">12,12</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="23" FontSize="12.0" Position="39.0,1369.0" Width="285.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Modularity
+Type class pattern for shared behaviors in many algebras. Instead of implementing the behavior in each interpreter centralize the implementation as implicits in one place.</String>
+            <ConnectedNoteIDs>16, 19</ConnectedNoteIDs>
+        </Note>
+        <Note ID="24" FontSize="12.0" Position="949.0,977.0" Width="272.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Stream model have actors that feed into the stream-processing pipeline that perform transformations on data based on domain rules and finally terminate in sinks that implement domain behaviors.</String>
+        </Note>
+        <Note ID="25" FontSize="12.0" Position="211.0,2362.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Modularization is about decomposing a large model into smaller modules that group sematically related behaviors.
+Each module has algebra that published to clients and one or more implementations that is carfully protected from inadverent coupling with the client code.</String>
+        </Note>
+        <Note ID="26" FontSize="12.0" Position="11.0,2375.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Type class vs regular trait algebra?
+Type class patter is to way to group common behavior (instead of related objects). It is used when several objects should implement the same behavior.
+
+Bounded context vs module
+
+How to communicate between bounded context?</String>
+        </Note>
+        <Note ID="27" FontSize="12.0" Position="556.0,1633.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Model elements
+ADT for entities, aggregates and value objects.
+Companion objects with smart constructors, lenses and other supporting abstractions.
+
+Repositories
+Repositories implementations are persistence adapters. </String>
+            <Formatting>
+                <FormatRange Bold="Yes">0,15</FormatRange>
+                <FormatRange Bold="Yes">149,13</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="29" FontSize="12.0" Position="945.0,775.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>What can go wrong
+TCP connection does not recive keep alive
+TCP return message report error
+Login for session fail
+Keep alive for session fails
+HTTP order request fails
+HTTP order request returns something went wrong
+Trader program craches</String>
+            <Formatting>
+                <FormatRange Bold="Yes">0,18</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="30" FontSize="12.0" Position="1238.0,836.0" Width="336.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Kika price cache logik i java exemple client eller scala exemple stream
+Fa session request som flow
+Las allt fran config
+Fa in order stream 
+Skicka order via order flow</String>
         </Note>
     </Notes>
     <BackgroundShapes></BackgroundShapes>
     <AutoFit>2-3, 8-12, 15</AutoFit>
     <NoteStyles>
-        <Style Name="Title Text" ID="B06DAA96-1858-4AE5-82F3-864822EE7B83" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
-            <FontSize>28.0</FontSize>
-            <IsBold>Yes</IsBold>
-        </Style>
-        <Style Name="Red Text" ID="E47F2CA5-8DCA-431A-ADB5-4FEBC44A9F66" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
-            <TextColor>1.0 0.0 0.0</TextColor>
+        <Style Name="Blue Bubble" ID="F3711B77-A9A6-4C73-8056-0DC8EDF64F7F" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.477193 0.557066 0.76433</BorderColor>
+            <FillColor>0.840969 0.866828 0.925903</FillColor>
         </Style>
         <Style Name="Brown Bubble" ID="F1EF24AD-AB96-478E-8EAB-ADFB59E74FA7" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
             <BorderThickness>1</BorderThickness>
             <BorderColor>0.290055 0.1523 0.182215</BorderColor>
             <FillColor>0.940019 0.892907 0.779716</FillColor>
         </Style>
-        <Style Name="Yellow Bubble" ID="A9CD28AA-7149-4FAC-A34E-ABB5BF04EA5D" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
-            <BorderThickness>1</BorderThickness>
-            <BorderColor>0.756763 0.785592 0.373258</BorderColor>
-            <FillColor>0.906773 0.910625 0.634363</FillColor>
-        </Style>
         <Style Name="Green Bubble" ID="366E474F-8D52-4FAB-97D3-FE13BAD21DC5" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
             <BorderThickness>1</BorderThickness>
             <BorderColor>0.331867 0.609932 0.356197</BorderColor>
             <FillColor>0.790123 0.882328 0.80198</FillColor>
         </Style>
-        <Style Name="Blue Bubble" ID="F3711B77-A9A6-4C73-8056-0DC8EDF64F7F" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
-            <BorderThickness>1</BorderThickness>
-            <BorderColor>0.477193 0.557066 0.76433</BorderColor>
-            <FillColor>0.840969 0.866828 0.925903</FillColor>
-        </Style>
         <Style Name="Pink Bubble" ID="D440A233-305A-4D63-AD39-C6163AFE6918" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
             <BorderThickness>1</BorderThickness>
             <BorderColor>0.747881 0.366532 0.542813</BorderColor>
             <FillColor>0.918452 0.807302 0.863467</FillColor>
+        </Style>
+        <Style Name="Red Text" ID="E47F2CA5-8DCA-431A-ADB5-4FEBC44A9F66" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
+            <TextColor>1.0 0.0 0.0</TextColor>
+        </Style>
+        <Style Name="Title Text" ID="B06DAA96-1858-4AE5-82F3-864822EE7B83" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
+            <FontSize>28.0</FontSize>
+            <IsBold>Yes</IsBold>
+        </Style>
+        <Style Name="Yellow Bubble" ID="A9CD28AA-7149-4FAC-A34E-ABB5BF04EA5D" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.756763 0.785592 0.373258</BorderColor>
+            <FillColor>0.906773 0.910625 0.634363</FillColor>
         </Style>
     </NoteStyles>
     <UISettings>

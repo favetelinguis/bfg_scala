@@ -8,16 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/application" />
-            <option value="$PROJECT_DIR$/application/project" />
-            <option value="$PROJECT_DIR$/componenttest" />
-            <option value="$PROJECT_DIR$/componenttest/project" />
-            <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/domain/project" />
-            <option value="$PROJECT_DIR$/infrastructure" />
-            <option value="$PROJECT_DIR$/infrastructure/project" />
-            <option value="$PROJECT_DIR$/loadtest" />
-            <option value="$PROJECT_DIR$/loadtest/project" />
+            <option value="$PROJECT_DIR$/bfg" />
+            <option value="$PROJECT_DIR$/bfg/project" />
             <option value="$PROJECT_DIR$/project" />
           </set>
         </option>

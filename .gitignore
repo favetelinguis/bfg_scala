@@ -108,3 +108,4 @@ project/plugins/project/
 *.log
 
 # End of https://www.gitignore.io/api/osx,sbt,scala,intellij
+/bfg/src/main/resources/keys/client-2048.p12
