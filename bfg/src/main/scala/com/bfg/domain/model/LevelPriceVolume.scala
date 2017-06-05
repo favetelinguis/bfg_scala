@@ -10,3 +10,7 @@ case class LevelPriceVolume(
                     ) {
   override def toString: String = s"level $level: $volume @ $price"
 }
+
+object LevelPriceVolume {
+  def empty(level: Int) = LevelPriceVolume(level, 0.0, 0.0)
+}

@@ -32,13 +32,6 @@ object Application
   // Setup all monitors
   actorSystem.eventStream.subscribe(sessionMonitor, classOf[SessionEvent])
 
-  // Connect to Betfair
-  //val appkey = ConfigFactory.load().getString("betfair.appkey")
-  //val appkeyDelay = ConfigFactory.load().getString("betfair.delay_appkey")
-  //val usr = ConfigFactory.load().getString("betfair.usr")
-  //val pwd = ConfigFactory.load().getString("betfair.pwd")
-  //println(s"$appkey $appkeyDelay $usr $pwd")
-
   import com.bfg.domain.model.DomainEvents.SessionEvent.SessionCreated
   val stopKeepAlive = for {
     session <- sessionService.getSession()

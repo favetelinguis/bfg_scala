@@ -10,7 +10,9 @@ trait MarketSnapService extends RunnerSnapService with LazyLogging {
 
   def newMarketSnap(cache: MarketSnap, delta: MarketChange) = {
     logger.info("NEW MARKET SNAP!!")
-    cache
+    val newMarketDefinition = if (delta.marketDefinition.isEmpty) cache.marketDefinition else delta.marketDefinition
+    val newTv = if (delta.tv.isEmpty) cache.tradedVolume else delta.tv
+    MarketSnap(cache.marketId, newMarketDefinition, mergeRunnersChangedToRunnersSnap(cache.marketRunners, delta.rc), newTv)
   }
 
   def convertToMarketSnap(mc: MarketChange): MarketSnap = {

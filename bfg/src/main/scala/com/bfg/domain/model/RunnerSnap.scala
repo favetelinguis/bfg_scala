@@ -7,3 +7,7 @@ case class RunnerSnap(
                            runnerId: RunnerId,
                            prices: MarketRunnerPrices
                            )
+
+object RunnerSnap {
+  def empty(selectionId: Long) = RunnerSnap(RunnerId(selectionId = selectionId), MarketRunnerPrices())
+}

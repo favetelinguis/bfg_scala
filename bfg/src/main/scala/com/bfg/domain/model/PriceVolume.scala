@@ -10,3 +10,7 @@ case class PriceVolume(
 
   override def toString = s"$volume @ $price"
 }
+
+object PriceVolume {
+  def empty(price: Double) = PriceVolume(price, 0.0)
+}

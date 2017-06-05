@@ -99,14 +99,14 @@ case class RunnerChange (
                           /* Best Available To Lay - LevelPriceVol triple delta of price changes, keyed by level (0 vol is remove) */
                           batl: Option[List[LevelPriceVolume]] = None,
                           /* Selection Id - the id of the runner (selection) */
-                          id: Option[Long] = None,
+                          id: Long,
                           /* Handicap - the handicap of the runner (selection) (null if not applicable) */
                           hc: Option[Double] = None,
                           /* Best Display Available To Back (includes virtual prices)- LevelPriceVol triple delta of price changes, keyed by level (0 vol is remove) */
                           bdatb: Option[List[LevelPriceVolume]] = None
                         )
 object RunnerChange {
-  val empty = RunnerChange()
+  def empty(id: Long) = RunnerChange(id = id)
 }
 
 case class MarketDefinition (

@@ -304,11 +304,10 @@ Trader program craches</String>
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
-            <String>Kika price cache logik i java exemple client eller scala exemple stream
-Fa session request som flow
-Las allt fran config
+            <String>Fa session request som flow
 Fa in order stream 
-Skicka order via order flow</String>
+Skicka order via order flow
+Config MarkerFilter and MarketDataFilter in config file, can i read whole case class from config?</String>
         </Note>
     </Notes>
     <BackgroundShapes></BackgroundShapes>
