@@ -1,30 +1,27 @@
 package com.bfg.infrastructure.betfair
 
-import java.time.Instant
-
-import akka.util.ByteString
-import cats.syntax.either._
 import com.bfg.domain.model._
+import com.bfg.domain.model.order.request.Side
 import com.typesafe.scalalogging.LazyLogging
 import de.knutwalker.akka.http.support.CirceHttpSupport
 import de.knutwalker.akka.stream.support.CirceStreamSupport
-import jawn.AsyncParser
 import io.circe._
-import io.circe.syntax._
 import io.circe.generic.auto._
+import io.circe.generic.extras.semiauto._
+import io.circe.java8.time.TimeInstances
+import io.circe.syntax._
 
 /**
   * Created by henke on 2017-05-13.
   */
-trait JsonSupport extends CirceHttpSupport with LazyLogging {
+trait JsonSupport extends CirceHttpSupport with TimeInstances with LazyLogging {
   implicit val decodeResponseMessage: Decoder[BetfairEvent] = Decoder.instance(c => {
     c.get[ResponseType]("op").flatMap {
       case Connection => c.as[ConnectionMessage]
       case Status => c.as[StatusMessage]
       case MCM => c.as[MarketChangeMessage]
     }
-  }
-  )
+  })
 
   // Custom encoder needed since by default circe include type name for generic types
   implicit val encodeFoo: Encoder[BetfairRequest] = new Encoder[BetfairRequest] {
@@ -40,10 +37,8 @@ trait JsonSupport extends CirceHttpSupport with LazyLogging {
   implicit val decoderLevelPriceVolume: Decoder[LevelPriceVolume] =
     Decoder[(Double, Double, Double)].map(p => LevelPriceVolume(p._1.toInt, p._2, p._3))
 
-  implicit val encodeInstant: Encoder[Instant] = Encoder.encodeString.contramap[Instant](_.toString)
-  implicit val decodeInstant: Decoder[Instant] = Decoder.decodeString.emap { str =>
-    Either.catchNonFatal(Instant.parse(str)).leftMap(t => "Instant")
-  }
+  implicit val sideDecoder: Decoder[Side] = deriveEnumerationDecoder[Side]
+  implicit val sideEncoder: Encoder[Side] = deriveEnumerationEncoder[Side]
 
   private val dropNullPrinter = Printer.noSpaces.copy(dropNullKeys = true)
   def requestToJsonDropNullKeys(request: BetfairRequest) = dropNullPrinter.pretty(request.asJson)

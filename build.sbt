@@ -1,7 +1,8 @@
-import Dependencies._
 import java.io.File
 
-val scalaV = "2.12.1"
+import Dependencies._
+
+val scalaV = "2.12.2"
 
 name := "bfg6"
 // Needed or else root is defaulted to 2.10

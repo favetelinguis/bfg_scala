@@ -18,4 +18,8 @@ package object config {
   trait BetfairUser
   trait BetfairPwd
   trait P12Pwd
+  trait BetingRestEndpoint
+
+  // Trader
+  trait WindowSize
 }

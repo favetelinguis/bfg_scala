@@ -20,5 +20,6 @@ trait BetfairModule extends ConfigModule {
   lazy val marketCacheService = wire[MarketCacheService]
   lazy val keepAliveService = wire[KeepAliveService]
   lazy val marketStreamService = wire[MarketStreamService]
+  lazy val orderService = wire[OrderService]
 
 }

@@ -42,8 +42,9 @@ object Dependencies {
   val circeVersion = "0.8.0"
   val circleJson = Seq(
     "io.circe" %% "circe-core",
-    "io.circe" %% "circe-generic",
-    "io.circe" %% "circe-parser"
+    "io.circe" %% "circe-parser",
+    "io.circe" %% "circe-java8",
+    "io.circe" %% "circe-generic-extras"
   ).map(_ % circeVersion)
   val jsonStream = List(
     "de.knutwalker" %% "akka-stream-circe" % "3.3.0",

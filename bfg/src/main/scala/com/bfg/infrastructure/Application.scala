@@ -1,18 +1,16 @@
 package com.bfg.infrastructure
 
+import akka.http.scaladsl.Http
+import akka.stream.scaladsl.Sink
 import com.bfg.domain.model._
-import com.bfg.domain.model.DomainEvents.SessionEvent
 import com.bfg.infrastructure.akkaconf.AkkaModule
 import com.bfg.infrastructure.betfair.BetfairModule
-import com.bfg.infrastructure.monitors.{MonitorsModule, SessionMonitorProtocol}
+import com.bfg.infrastructure.monitors.MonitorsModule
 import com.bfg.infrastructure.server.ServerModule
+import com.bfg.infrastructure.trader.TraderModule
 import com.typesafe.scalalogging.LazyLogging
-import akka.pattern.ask
-import akka.stream.{ActorMaterializer, ActorMaterializerSettings, Supervision}
-import akka.util.Timeout
 
 import scala.util.{Failure, Success}
-import scala.concurrent.duration._
 
 /**
   * Created by henke on 2017-05-20.
@@ -20,6 +18,7 @@ import scala.concurrent.duration._
 object Application
   extends App
     with BetfairModule
+    with TraderModule
     with ServerModule
     with AkkaModule
     with MonitorsModule
@@ -27,32 +26,51 @@ object Application
 
 
   // Wire dependecies
-  override val sessionMonitor = getSessionMonitor
+  //override val sessionMonitor = getSessionMonitor
 
   // Setup all monitors
-  actorSystem.eventStream.subscribe(sessionMonitor, classOf[SessionEvent])
+  //actorSystem.eventStream.subscribe(sessionMonitor, classOf[SessionEvent])
 
-  import com.bfg.domain.model.DomainEvents.SessionEvent.SessionCreated
-  val stopKeepAlive = for {
-    session <- sessionService.getSession()
-    _ = marketStreamService.connect(session)
-    //todo getMarketStreamActor ? SetupSubscription(session)
-    _ = actorSystem.eventStream.publish(SessionCreated(session.sessionToken))
+  //import com.bfg.domain.model.DomainEvents.SessionEvent.SessionCreated
+  //val stopKeepAlive = for {
+  //  session <-
+  //  _ =
+  //  //todo getMarketStreamActor ? SetupSubscription(session)
+  //  _ = actorSystem.eventStream.publish(SessionCreated(session.sessionToken))
   //cancelKeepAlive = keepSessionAlive(session)
-  } yield session
+  //} yield session
   //stopKeepAlive.foreach(m=>logger.info(m.toString))
   // Send status events from stream like this
   //system.eventStream.publish(SessionMonitorProtocol.SessionCreated("BAJA"))
 
+  val subStream =
+    marketCacheService.holdCache
+      .via(traderService.system)
+
+  def stream(st: SessionToken) = {
+    marketStreamService.connect(st)
+      .groupBy(Int.MaxValue, _.id)
+      .via(subStream).async
+      .mergeSubstreams
+      .via(orderService.executeOrders)
+      .to(Sink.foreach(m => logger.info(s"Incoming market data: $m")))
+      .run()
+  }
+
   // Start server
-  stopKeepAlive
+  sessionService.getSession()
     .onComplete{
-    case Success(_) => {
+    case Success(st: SessionToken) => {
+      //Start stream
+      stream(st)
+      //Start server
       server.bind.foreach { binding =>
         server.afterStart(binding)
         sys.addShutdownHook {
           //todo logout from bf and close tcp sockets
-          server.beforeStop(binding)
+          Http().shutdownAllConnectionPools().onComplete{_ =>
+            server.beforeStop(binding)
+          }
         }
       }
     }

@@ -6,17 +6,14 @@ import akka.NotUsed
 import akka.actor.{ActorRef, ActorSystem}
 import akka.stream.TLSProtocol.{NegotiateNewSession, SslTlsInbound, SslTlsOutbound}
 import akka.stream.scaladsl.Tcp.OutgoingConnection
-import akka.stream.scaladsl.{BidiFlow, Flow, Sink, Source, TLS, Tcp}
+import akka.stream.scaladsl.{BidiFlow, Flow, Source, TLS, Tcp}
 import akka.stream.{ActorMaterializer, Client, OverflowStrategy, TLSProtocol}
 import akka.util.ByteString
-import com.bfg.domain.model.{BetfairEvent, BetfairRequest, MarketChangeMessage, SessionToken}
+import com.bfg.domain.model._
 import com.bfg.infrastructure.betfair.subscriptionGraphState.SubscriptionGraphStage
-import com.typesafe.scalalogging.LazyLogging
-import de.knutwalker.akka.stream.support.CirceStreamSupport
-import io.circe
-import jawn.AsyncParser
-import com.softwaremill.tagging._
 import com.bfg.infrastructure.config._
+import com.softwaremill.tagging._
+import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.Future
 
@@ -30,9 +27,6 @@ class MarketStreamService(
                          actorMaterializer: ActorMaterializer,
                          marketCacheService: MarketCacheService
                          ) extends LazyLogging with JsonSupport {
-  import io.circe.generic.auto._
-  import io.circe.parser.decode
-  import io.circe.syntax._
 
   private implicit val mat = actorMaterializer
   private implicit val sys = actorSystem
@@ -65,8 +59,6 @@ class MarketStreamService(
 
   // Each time I run this function I establish a new connection and gets an actor back wich I can send outgoing messages to
   // I need to connect all my trading loginc and connect this to a source and then i can run til graph
-  def connect(token: SessionToken): ActorRef = tcpConnection(token)
+  def connect(token: SessionToken): Source[MarketChange, ActorRef] = tcpConnection(token)
     .via(marketCacheService.marketCache)
-    .to(Sink.foreach(m => logger.info(s"Incoming market data: $m")))
-    .run()
 }

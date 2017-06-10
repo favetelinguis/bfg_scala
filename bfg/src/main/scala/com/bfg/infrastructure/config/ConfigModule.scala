@@ -49,4 +49,6 @@ trait ConfigModule {
   lazy val streamPort: Int @@ StreamPort = {
     config.getInt("server.endpoints.streamport").taggedWith[StreamPort]
   }
+
+  lazy val windowSize = config.getInt("trader.windowSize").taggedWith[WindowSize]
 }

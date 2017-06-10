@@ -304,9 +304,10 @@ Trader program craches</String>
             <Appearance>
                 <Alignment>Left</Alignment>
             </Appearance>
-            <String>Fa session request som flow
-Fa in order stream 
+            <String>Ha en strategi
 Skicka order via order flow
+Fa in order stream to verify correct order is executed
+
 Config MarkerFilter and MarketDataFilter in config file, can i read whole case class from config?</String>
         </Note>
     </Notes>

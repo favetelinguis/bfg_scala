@@ -11,9 +11,9 @@ import akka.http.scaladsl.{ConnectionContext, Http}
 import akka.stream.ActorMaterializer
 import com.bfg.domain.model.SessionToken
 import com.bfg.infrastructure.config._
+import com.softwaremill.tagging._
 import com.typesafe.scalalogging.LazyLogging
 import io.circe.generic.auto._
-import com.softwaremill.tagging._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -56,7 +56,7 @@ class SessionService(
     context
   }
 
-  def getSession() =
+  def getSession(): Future[SessionToken] =
     Http()
       .singleRequest(request = loginRequest, connectionContext = httpsContext)
       .flatMap{ case HttpResponse(StatusCodes.OK,_,entity,_) => Unmarshal(entity.withContentType(ContentTypes.`application/json`)).to[SessionToken] }

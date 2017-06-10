@@ -19,19 +19,12 @@ class MarketCacheService() extends MarketChangeService with LazyLogging {
   val splitMarketChanges: Flow[List[MarketChange], MarketChange, NotUsed] = Flow[List[MarketChange]]
     .mapConcat(identity)
 
-  val holdCache = Flow[MarketChange]
+  val holdCache: Flow[MarketChange, MarketSnap, NotUsed] = Flow[MarketChange]
     .scan(Option.empty[MarketSnap])((cache: Option[MarketSnap], newMarketChange: MarketChange) => updateCache(cache, newMarketChange))
     .collect {
       // Drops the first empty cache message
       case Some(cache) => cache
     }
-    //.drop(1) // Drops the first empty value from scan
 
-
-    val splitByMarketId = Flow[MarketChange]
-    .groupBy(Int.MaxValue, _.id)
-    .via(holdCache).async
-    .mergeSubstreams
-
-  val marketCache = onlyChangeMessage.via(splitMarketChanges).via(splitByMarketId)
+  val marketCache = onlyChangeMessage.via(splitMarketChanges)
 }
