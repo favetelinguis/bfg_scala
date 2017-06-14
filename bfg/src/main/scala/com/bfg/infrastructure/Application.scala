@@ -1,79 +1,62 @@
 package com.bfg.infrastructure
 
-import akka.http.scaladsl.Http
+import akka.actor.ActorRef
 import akka.stream.scaladsl.Sink
-import com.bfg.domain.model._
+import com.bfg.application.monitors
+import com.bfg.application.monitors.{MarketSnapMonitor, Monitor, MonitorsModule}
+import com.bfg.application.trader.TraderModule
+import com.bfg.domain.model.{MarketSnap, SessionToken}
 import com.bfg.infrastructure.akkaconf.AkkaModule
 import com.bfg.infrastructure.betfair.BetfairModule
-import com.bfg.infrastructure.monitors.MonitorsModule
-import com.bfg.infrastructure.server.ServerModule
-import com.bfg.infrastructure.trader.TraderModule
-import com.typesafe.scalalogging.LazyLogging
+import com.bfg.infrastructure.gui.GUI
+import com.softwaremill.tagging.@@
+import com.softwaremill.tagging._
 
 import scala.util.{Failure, Success}
+import scalafx.application.JFXApp
 
 /**
-  * Created by henke on 2017-05-20.
+  * Created by henke on 2017-06-11.
   */
 object Application
-  extends App
-    with BetfairModule
-    with TraderModule
-    with ServerModule
-    with AkkaModule
-    with MonitorsModule
-    with LazyLogging {
+  extends JFXApp
+  with AkkaModule
+  with MonitorsModule
+  with TraderModule
+  with BetfairModule
+  with GUI {
 
-
-  // Wire dependecies
-  //override val sessionMonitor = getSessionMonitor
-
-  // Setup all monitors
-  //actorSystem.eventStream.subscribe(sessionMonitor, classOf[SessionEvent])
-
-  //import com.bfg.domain.model.DomainEvents.SessionEvent.SessionCreated
-  //val stopKeepAlive = for {
-  //  session <-
-  //  _ =
-  //  //todo getMarketStreamActor ? SetupSubscription(session)
-  //  _ = actorSystem.eventStream.publish(SessionCreated(session.sessionToken))
-  //cancelKeepAlive = keepSessionAlive(session)
-  //} yield session
-  //stopKeepAlive.foreach(m=>logger.info(m.toString))
-  // Send status events from stream like this
-  //system.eventStream.publish(SessionMonitorProtocol.SessionCreated("BAJA"))
-
-  val subStream =
-    marketCacheService.holdCache
-      .via(traderService.system)
-
-  def stream(st: SessionToken) = {
-    marketStreamService.connect(st)
-      .groupBy(Int.MaxValue, _.id)
-      .via(subStream).async
-      .mergeSubstreams
-      .via(orderService.executeOrders)
-      .to(Sink.foreach(m => logger.info(s"Incoming market data: $m")))
-      .run()
+  // Start GUI
+  stage = new JFXApp.PrimaryStage {
+    title = "BFG6"
+    scene = mainStageView.scene
   }
 
-  // Start server
+  // Cleanup after program exit
+  override def stopApp(): Unit = {
+    actorSystem.terminate()
+    // todo properly logout and quit from betfair
+  }
+
+  // Setup Monitors
+  override val marketSnapMonitor =
+    Monitor.createMonitor[MarketSnap]
+      .to(Sink.foreach(mainStageController.handleMarketSnapMonitor))
+      .run().taggedWith[MarketSnapMonitor]
+
+  // Request session
   sessionService.getSession()
     .onComplete{
-    case Success(st: SessionToken) => {
-      //Start stream
-      stream(st)
-      //Start server
-      server.bind.foreach { binding =>
-        server.afterStart(binding)
-        sys.addShutdownHook {
-          //todo logout from bf and close tcp sockets
-          Http().shutdownAllConnectionPools().onComplete{_ =>
-            server.beforeStop(binding)
-          }
-        }
+      case Success(st: SessionToken) => {
+        //Start stream
+        marketStreamService.connect(st)
+          .to(traderService.system)
+          .run()
+      }
+      case Failure(e) => {
+        //todo call controller to update state in gui
+        logger.error(s"Failed to get session from betfair: $e")
       }
     }
-    case Failure(e) => logger.error(s"Failed to setup to betfair: $e")
-  }
+
 }

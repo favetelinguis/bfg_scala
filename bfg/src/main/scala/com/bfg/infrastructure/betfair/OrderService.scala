@@ -19,23 +19,4 @@ class OrderService(
                     actorMaterializer: ActorMaterializer
                   ) extends JsonSupport {
 
-  val createOrder = Flow[Decision].map(orderFromDecision andThen(d => d.))
-
-  val connectionPool = Http().superPool[Int](url = bettingEndpoint)
-  val cp =  Http().cachedHostConnectionPool[T](bettingEndpoint)
-
-  private val requestBody = FormData(Map(
-    "password" -> betfairPwd, "username" -> betfairUser
-  )).toEntity
-
-  private val loginRequest = HttpRequest(
-    uri = Uri(sessionEndpoint),
-    method = HttpMethods.POST,
-    entity = requestBody
-  ).withHeaders(
-    RawHeader("X-Application", appKey)
-  )
-  val createRequest = F
-
-  val executeOrders = createOrder.via(connectionPool)
 }

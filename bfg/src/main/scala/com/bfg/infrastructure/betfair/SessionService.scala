@@ -59,5 +59,9 @@ class SessionService(
   def getSession(): Future[SessionToken] =
     Http()
       .singleRequest(request = loginRequest, connectionContext = httpsContext)
+      .map{r=>
+        logger.info(s"Response from Session login: ${r.entity}")
+        r
+      }
       .flatMap{ case HttpResponse(StatusCodes.OK,_,entity,_) => Unmarshal(entity.withContentType(ContentTypes.`application/json`)).to[SessionToken] }
 }

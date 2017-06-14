@@ -59,6 +59,9 @@ class MarketStreamService(
 
   // Each time I run this function I establish a new connection and gets an actor back wich I can send outgoing messages to
   // I need to connect all my trading loginc and connect this to a source and then i can run til graph
-  def connect(token: SessionToken): Source[MarketChange, ActorRef] = tcpConnection(token)
+  def connect(token: SessionToken): Source[MarketSnap, ActorRef] = tcpConnection(token)
     .via(marketCacheService.marketCache)
+    .groupBy(Int.MaxValue, _.id)
+    .via(marketCacheService.holdCache).async
+    .mergeSubstreams
 }

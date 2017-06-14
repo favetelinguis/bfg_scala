@@ -20,7 +20,6 @@ docker <<= (docker in bfg) map {(image) => image}
 //Set the image creation Task to be the one used by sbt-docker
 dockerImageCreationTask := docker.value
 
-
 lazy val bfg = project
   .settings(
     name := "bfg",

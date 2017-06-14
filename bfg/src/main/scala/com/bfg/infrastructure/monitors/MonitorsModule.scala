@@ -12,7 +12,7 @@ trait MonitorsModule {
 
   def actorSystem: ActorSystem
 
-  lazy val getSessionMonitor = actorSystem.actorOf(Props(wire[SessionMonitor]))
+  //lazy val getSessionMonitor = actorSystem.actorOf(Props(wire[SessionMonitor]))
   lazy val marketsSnapMonitor = Monitor.createMonitor[MarketSnap].taggedWith[MarketsSnapMonitor]
 
 }

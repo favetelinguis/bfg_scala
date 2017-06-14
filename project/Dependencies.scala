@@ -53,5 +53,7 @@ object Dependencies {
   val macWire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val macWireUtil = "com.softwaremill.macwire" %% "util" % "2.3.0" //For tagging support
 
-  val commonDeps = Seq(scalaTest, macWireUtil, akkaHttpTestkit, scalaMock, macWire, akkaHttp, akkaStream, akkaStreamTestkit,cats) ++ monocle ++ logging ++ circleJson ++ jsonStream
+  val scalaFx = "org.scalafx" %% "scalafx" % "8.0.102-R11"
+
+  val commonDeps = Seq(scalaFx, scalaTest, macWireUtil, akkaHttpTestkit, scalaMock, macWire, akkaHttp, akkaStream, akkaStreamTestkit,cats) ++ monocle ++ logging ++ circleJson ++ jsonStream
 }

@@ -17,7 +17,7 @@ trait AkkaModule extends LazyLogging {
     Supervision.Stop
   }
 
-  implicit val actorSystem: ActorSystem = ActorSystem()
+  implicit val actorSystem: ActorSystem = ActorSystem("BFG")
   private val materializerSettings = ActorMaterializerSettings(actorSystem).withSupervisionStrategy(decider)
   implicit val dispatcher: ExecutionContext = actorSystem.dispatcher
   implicit val actorMaterializer: ActorMaterializer = ActorMaterializer(materializerSettings)
